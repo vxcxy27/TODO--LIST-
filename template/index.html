@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todo App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .delete {
+            color: red;
+        }
+
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .incomplete {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>My Todo List</h2>
+
+        <!-- Add Todo Form -->
+        <form action="/add" method="POST">
+
+            <input
+                type="text"
+                name="task_name"
+                placeholder="Enter your todo"
+                required
+            >
+
+            <button type="submit">ADD</button>
+
+        </form>
+
+
+        <!-- Todo List -->
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+
+            {% for todo in todos %}
+
+            <tr>
+
+                <td>
+                    {{ todo.task_id }}
+                </td>
+
+                <td>
+                    {{ todo.task_name }}
+                </td>
+
+                <td>
+
+                    {% if todo.status == False %}
+
+                        <span class="incomplete">
+                            Incomplete
+                        </span>
+
+                    {% else %}
+
+                        <span class="completed">
+                            Completed
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    <a href="/update/{{ todo.task_id }}">
+                        Update
+                    </a>
+                </td>
+
+                <td>
+                    <a
+                        class="delete"
+                        href="/dele/{{ todo.task_id }}"
+                    >
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
